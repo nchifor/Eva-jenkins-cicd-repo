@@ -23,7 +23,6 @@ pipeline {
             steps {
                 echo 'Changing directory to prod directory...'
                 sh 'cd prod-pipeline'
-                sh 'cd terraform-infra-config-files'
                 sh 'ls'
             }
         }
