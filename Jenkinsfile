@@ -67,10 +67,10 @@ pipeline {
             }
         }
         
-        stage('Terraform apply -var-file="./prod-values.tfvars"') {
+        stage('Terraform apply') {
             steps {
                 echo 'Terraform apply...'
-                sh 'terraform apply --auto-approve'
+                sh 'terraform apply -var-file="./prod-values.tfvars" --auto-approve'
             } 
         }
 
@@ -85,7 +85,7 @@ pipeline {
         stage('Terraform Destroy') {
             steps {
                 echo 'Terraform Destroy...'
-                sh 'terraform destroy --auto-approve'
+                sh 'terraform destroy -var-file="./prod-values.tfvars" --auto-approve'
                 }
             }
     }
