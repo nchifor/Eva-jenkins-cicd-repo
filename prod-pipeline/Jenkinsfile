@@ -15,8 +15,7 @@ pipeline {
         stage('Git checkout from prod branch') {
             steps {
                 echo 'Cloning project codebase...'
-                git branch: 'main', url: 'https://github.com/Michaelgwei86/jenkins_with_terraform_deployment.git'
-                sh 'ls'
+                git branch: 'prod-pipeline', url: 'https://github.com/HILL-TOPCONSULTANCY/jenkins-cicd-repo.git'
             }
         }
         
@@ -24,6 +23,8 @@ pipeline {
             steps {
                 echo 'Changing directory to prod directory...'
                 sh 'cd prod-pipeline'
+                sh 'cd terraform-infra-config-files'
+                sh 'ls'
             }
         }
 
@@ -49,7 +50,6 @@ pipeline {
             }
         }
         
-        
         stage('Terraform validate') {
             steps {
                 echo 'Code syntax checking...'
@@ -57,7 +57,6 @@ pipeline {
                 sh 'pwd'
             }
         }
-        
         
         stage('Terraform plan') {
             steps {
