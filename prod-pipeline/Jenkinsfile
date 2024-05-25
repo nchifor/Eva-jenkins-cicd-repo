@@ -15,7 +15,7 @@ pipeline {
         stage('Git checkout from prod branch') {
             steps {
                 echo 'Cloning project codebase...'
-                git branch: 'prod-pipeline', url: 'https://github.com/HILL-TOPCONSULTANCY/jenkins-cicd-repo.git'
+                git branch: 'main', url: 'https://github.com/HILL-TOPCONSULTANCY/jenkins-cicd-repo.git'
             }
         }
         
