@@ -51,7 +51,7 @@ pipeline {
             }
         }
         
-        stage('Terraform plan') {
+        stage('Terraform plan -var-file="./prod-values.tfvars"') {
             steps {
                 echo 'Terraform plan for the dry run...'
                 sh 'terraform plan'
@@ -67,7 +67,7 @@ pipeline {
             }
         }
         
-        stage('Terraform apply') {
+        stage('Terraform apply -var-file="./prod-values.tfvars"') {
             steps {
                 echo 'Terraform apply...'
                 sh 'terraform apply --auto-approve'
