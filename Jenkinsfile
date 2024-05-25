@@ -51,10 +51,10 @@ pipeline {
             }
         }
         
-        stage('Terraform plan -var-file="./prod-values.tfvars"') {
+        stage('Terraform plan') {
             steps {
                 echo 'Terraform plan for the dry run...'
-                sh 'terraform plan'
+                sh 'terraform plan -var-file="./prod-values.tfvars"'
                
             }
         }
