@@ -16,16 +16,10 @@ pipeline {
             steps {
                 echo 'Cloning project codebase...'
                 git branch: 'main', url: 'https://github.com/HILL-TOPCONSULTANCY/jenkins-cicd-repo.git'
-            }
-        }
-        
-        stage('changing directory to prod-directory') {
-            steps {
-                echo 'Changing directory to prod directory...'
-                sh 'cd prod-pipeline'
                 sh 'ls'
             }
         }
+        
 
         stage('Verifying AWS Configuration'){
             steps {
