@@ -1,29 +1,23 @@
 ## Devops-fully-automated-infracture-deployment-with-Jenkins
 Fully automated and secured Terraform infra pipeline
 
-Testing the webhook.....
-
 ## CICD Infra setup
 1) ###### GitHub setup
-    Fork GitHub Repository by using the existing repo "effulgencetech-devops-fully-automated-infra" (https://github.com/Michaelgwei86/jenkins_with_terraform_deployment.git)     
+    Fork GitHub Repository by using the existing repo "jenkins-cicd-repo" (https://github.com/HILL-TOPCONSULTANCY/jenkins-cicd-repo.git)     
     - Go to GitHub (github.com)
     - Login to your GitHub Account
-    - **Fork repository "effulgencetech-devops-fully-automated-infra" (https://github.com/Michaelgwei86/jenkins_with_terraform_deployment.git) & name it "effulgencetech-devops-fully-automated-infra.git"**
+    - Fork repository "jenkins-cicd-repo" (https://github.com/HILL-TOPCONSULTANCY/jenkins-cicd-repo.git) & name it "jenkins-cicd-repo.git"
     - Clone your newly created repo to your local
 
 2) ###### Jenkins
     - Create an **Amazon Linux 2 VM** instance and call it "Jenkins"
-    - Instance type: t2.large
+    - Instance type: t2.medium
     - Security Group (Open): 8080, 9100 and 22 to 0.0.0.0/0
     - Key pair: Select or create a new keypair
     - **Attach Jenkins server with IAM role having "AdministratorAccess"**
     - Launch Instance
     - After launching this Jenkins server, attach a tag as **Key=Application, value=jenkins**
-    - SSH into the instance and Run the following commands in the **jenkins-install.sh** file
-
-3) ###### Slack 
-    - **Join the slack channel https://devopswithmike.slack.com/archives/C0590M8QZ97**
-    - **Join into the channel "#developers"**
+    - SSH into the instance and Run the following commands in the **jenkins.sh** file found in the **installation-files** directory
 
 ### Jenkins setup
 1) #### Access Jenkins
@@ -41,7 +35,7 @@ Testing the webhook.....
 
 2)  #### Pipeline creation
     - Click on **New Item**
-    - Enter an item name: **effulgencetech-app-infra-pipeline** & select the category as **Pipeline**
+    - Enter an item name: **jenkins-cicd-pipeline** & select the category as **Pipeline**
     - Now scroll-down and in the Pipeline section --> Definition --> Select Pipeline script from SCM
     - SCM: **Git**
     - Repositories
@@ -55,23 +49,22 @@ Testing the webhook.....
     - Click on "Plugin Manager"
     - Click "Available"
     - Search and Install the following Plugings "Install Without Restart"        
-        - **Slack Notification**
+        - **Terraform**
 
-4)  #### Credentials setup(Slack):
+4)  #### Credentials setup(AWS):
     - Click on Manage Jenkins --> Manage Credentials --> Global credentials (unrestricted) --> Add Credentials
-        1)  ###### Slack secret token (slack-token)
+        1)  ###### AWS Credential (AWS_ACCESS_KEY)
             - Kind: Secret text            
             - Secret: lXpiMy7yGJLm9V6OsMmdkKVS
-            - ID: Slack-token
-            - Description: Slack-token
-            - Click on Create                
-
-        2)  #### Configure system:
-            - Click on Manage Jenkins --> Configure System
-
-            1)  - Go to section Slack
-                - Workspace: **devopswithmike** (if not working try with Team-subdomain devopswithmike)
-                - Credentials: select the slack-token credentials (created above) from the drop-down    
+            - ID: AWS_ACCESS_KEY
+            - Description: AWS_ACCESS_KEY
+            - Click on Create    
+        2) ###### AWS Credential (AWS_SECRET_ACCESS_KEY)
+            - Kind: Secret text            
+            - Secret: lXpiMy7yGJLm9V6OsMmdkKVS
+            - ID: AWS_SECRET_ACCESS_KEY
+            - Description: AWS_SECRET_ACCESS_KEY
+            - Click on Create              
 
 
 ### Performing continous integration with GitHub webhook
@@ -83,8 +76,8 @@ Testing the webhook.....
     - Click on Add webhook
 
 2) #### Configure on the Jenkins side to pull based on the event
-    - Access your jenkins server, pipeline **effulgencetech-app-infra-pipeline**
-    - Once pipeline is accessed --> Click on Configure --> In the General section --> **Select GitHub project checkbox** and fill your repo URL of the project effulgencetech-devops-fully-automated.
+    - Access your jenkins server, pipeline **jenkins-cicd-pipeline**
+    - Once pipeline is accessed --> Click on Configure --> In the General section --> **Select GitHub project checkbox** and fill your repo URL of the project.
     - Scroll down --> In the Build Triggers section -->  **Select GitHub hook trigger for GITScm polling checkbox**
 
 Once both the above steps are done click on Save.
@@ -92,15 +85,14 @@ Once both the above steps are done click on Save.
 
 ### Codebase setup
 
-1) #### For checking the Gitbut webhook uncomment lines 42-51 in main.tf file
-    - Go back to your local, open your "jenkins_with_terraform_deployment" project on VSCODE
+1) #### For checking the Gitbut webhook uncomment lines 18-24 in main.tf file
+    - Go back to your local, open your "jenkins-cicd-repo" project on VSCODE
     - Open "main.tf file" uncomment lines   
     - Save the changes in both files
     - Finally push changes to repo
         `git add .`
         `git commit -m "relevant commit message"`
         `git push`
+### Finally observe the whole flow and understand the integrations
 
-
-## Finally observe the whole flow and understand the integrations
 # Happy learning from Hilltop  Consultancy
