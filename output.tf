@@ -13,6 +13,6 @@ output "s3bucket_arn" {
 
 #outputting ec2 instance id
 
-output "instance_id" {
-    value = module.prod-instance.publicip
-}
+# output "instance_id" {
+#    value = module.prod-instance.publicip
+# }
