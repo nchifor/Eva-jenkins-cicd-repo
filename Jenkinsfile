@@ -59,11 +59,16 @@ pipeline {
             }
         }
         
-        stage('Manual approval') {
+        stage('Manual Approval') {
             steps {
-                
-                input 'Approval required for deployment'
-               
+                script {
+                    def userInput = input(id: 'Proceed1', message: 'Approve Terraform Apply?', parameters: [
+                        [$class: 'TextParameterDefinition', defaultValue: 'Yes', description: 'Type Yes to approve', name: 'Approval']
+                    ])
+                    if (userInput['Approval'] != 'Yes') {
+                        error "Pipeline aborted by user"
+                    }
+                }
             }
         }
         
